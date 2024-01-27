@@ -6,11 +6,32 @@ document.getElementById("btn").onclick = function(){
 
 // 取得に成功した場合の処理
 function successCallback(position){
-    // shopsページに遷移
-    window.location.href = "/shops";
+    // // shopsページに遷移
+    // window.location.href = "/shops";
+
+    // 緯度経度
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+
+    // formのデータを取得する
+    const f = document.getElementById("for");
+    console.log(f);
+
+    f.addEventListener('formdata',(e) => {
+        var formdata = e.formData;
+        // 緯度経度のデータを追加
+        formdata.set("data[lat]",latitude);
+        formdata.set("data[lng]",longitude);
+    });
+    //送信
+    f.submit();
 };
 
 // 取得に失敗した場合の処理
 function errorCallback(error){
     alert("位置情報が取得できませんでした");
 };
+
+document.getElementById("aw").onclick = function(){
+    console.log("OK");
+}
