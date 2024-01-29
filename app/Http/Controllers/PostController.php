@@ -1,12 +1,16 @@
 <?php
 namespace App\Http\Controllers;
-use App\Models\Post;
+use App\Models\Shop;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 
 class PostController extends Controller{
     //index
     public function index(){
+        return view('search/index');
+    }
+
+    public function redord(Request $request, Shop $shops){
         return view('search/index');
     }
 
@@ -35,9 +39,13 @@ class PostController extends Controller{
         $shops = $response->getBody();
         $shops = json_decode($shops, true);
         $shops = json_decode($response->getBody(), true);
+        $shops = $shops['results']['shop'];
+        $view = 7; //1ページに表示する数
+        $shops = array_chunk($shops,$view);
+        $page = [0,$view,count($shops)];
         //shopsブレードに取得したデータを渡す
         return view('search/shops')->with([
-            'shops'=>$shops['results']['shop'],
+            'shops'=>$shops,'page'=>$page
         ]);
     }
 
