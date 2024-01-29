@@ -10,12 +10,12 @@ class PostController extends Controller{
         return view('search/index');
     }
 
-    public function redord(Request $request, Shop $shops){
+    public function shops(Request $request, Shop $shops){
         return view('search/index');
     }
 
     //店データを取得しshopsへ
-    public function shops(Request $request){
+    public function redord(Request $request,Shop $shop){
         $data = $request->data;
 
         $key = config('services.HP.key');
@@ -40,8 +40,23 @@ class PostController extends Controller{
         $shops = json_decode($shops, true);
         $shops = json_decode($response->getBody(), true);
         $shops = $shops['results']['shop'];
-        $view = 7; //1ページに表示する数
-        $shops = array_chunk($shops,$view);
+        foreach($shops as $index=>$shop_data){
+            $shop = new Shop;
+            $input_data['name'] = $shop_data['name'];
+            $input_data['logo_image'] = $shop_data['logo_image'];
+            $input_data['address'] = $shop_data['address'];
+            $input_data['lat'] = $shop_data['lat'];
+            $input_data['lng'] = $shop_data['lng'];
+            $input_data['genre'] = $shop_data['genre']['name'];
+            $input_data['access'] = $shop_data['access'];
+            $input_data['url'] = $shop_data['urls']['pc'];
+            $input_data['image_pc'] = $shop_data['photo']['pc']['l'];
+            $input_data['image_mobile'] = $shop_data['photo']['mobile']['l'];
+            $input_data['open'] = $shop_data['open'];
+            $input_data['close'] = $shop_data['close'];
+            $shop->fill($input_data)->save();
+        };
+        dd("ok");
         $page = [0,$view,count($shops)];
         //shopsブレードに取得したデータを渡す
         return view('search/shops')->with([

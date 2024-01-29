@@ -18,7 +18,7 @@
     <body class="antialiased">
         
         <div class="center">
-            <form action="/shops" method="GET" id="for">
+            <form action="/redord" method="GET" id="for">
                 <select name="data[range]">
                     <optgroup label="距離半径">
                         <option value="">キョリを選択</option>
