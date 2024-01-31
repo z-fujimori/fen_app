@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('shops', function (Blueprint $table) {
             $table->id();
-            $table->string('name',30); //店舗名
+            $table->string('name'); //店舗名
             $table->string('logo_image')->nullable(); //ロゴ画像
             $table->string('address'); //住所
             $table->double('lat'); //緯度経度
@@ -25,8 +25,9 @@ return new class extends Migration
             $table->string('url')->nullable(); //お店のURL
             $table->string('image_pc')->nullable(); //pc用の画像
             $table->string('image_mobile')->nullable(); //スマホ用の画像
-            $table->string('open'); //営業時間
+            $table->string('open',400); //営業時間
             $table->string('close')->nullable(); //休業日
+            $table->integer('time'); //登録された時間
             $table->timestamps();
         });
     }

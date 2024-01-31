@@ -34,7 +34,13 @@ window.onload = function () {
 
     document.getElementById("aw").onclick = function(){
         console.log("page");
-    }
-
-
+    };
 };
+
+document.getElementById("shop").onclick = function(){
+    var shop = document.getElementById('shop');
+    var id = shop.getAttribute('value');
+    console.log(id);
+};
+
+
