@@ -6,12 +6,24 @@ use GuzzleHttp\Client;
 
 class PostController extends Controller{
     //index
-    public function index(){
-        return view('search/index');
+    public function index(Shop $shop){
+        return view('search/index')->with([
+            'shops'=>null,
+        ]);
     }
 
     public function shops(Request $request, Shop $shops){
-        return view('search/index');
+        if(isset($_GET['range'])){
+            $range = $_GET['range'];
+            $date = $_GET['date'];
+        }else{
+            $date = $request->session()->get('time');
+        };
+        //$test = localStorage.getItem('time');
+        //dd($test);
+        return view('search/index')->with([
+            'shops'=>$shops->where('time',$date)->paginate(6),
+        ]);
     }
 
     //店データを取得しshopsへ
@@ -40,6 +52,7 @@ class PostController extends Controller{
         $shops = json_decode($shops, true);
         $shops = json_decode($response->getBody(), true);
         $shops = $shops['results']['shop'];
+        $date = strtotime('now');
         foreach($shops as $index=>$shop_data){
             $shop = new Shop;
             $input_data['name'] = $shop_data['name'];
@@ -54,13 +67,15 @@ class PostController extends Controller{
             $input_data['image_mobile'] = $shop_data['photo']['mobile']['l'];
             $input_data['open'] = $shop_data['open'];
             $input_data['close'] = $shop_data['close'];
+            $input_data['time'] = $date;
             $shop->fill($input_data)->save();
         };
-        dd("ok");
-        $page = [0,$view,count($shops)];
+        //window.localStorage.setItem('time',$date);
         //shopsブレードに取得したデータを渡す
-        return view('search/shops')->with([
-            'shops'=>$shops,'page'=>$page
+        //return redirect("/shops?range={$data['range']}&date={$date}");
+        return redirect('/shops')->with([
+            'range'=>$data['range'],
+            'time'=>$date,
         ]);
     }
 

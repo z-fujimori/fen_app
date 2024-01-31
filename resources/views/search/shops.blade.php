@@ -23,30 +23,23 @@
         </div>
         
         <div id='shops'  class='shops'>
-            <div id='shop' class='shop'>
-                <div id='title' class='title'>
-                </div>
-                <div id='img' class='img'>
-                </div>
-                <divb id='body' class='body'>
-                </divb>
-            </div>
-            @foreach ($shops[$page[0]] as $index => $shop)
-                <br>
+            @foreach ($shops as $index => $shop)
                 <div class='shop'>
                     <h2 class="title text-xl">
-                        aaaaa
-                        {{$shop['name']}}
+                        {{$shop->name}}
                     </h2>
+                    <p>{{$shop->access}}</p>
+                </div>
+                
             @endforeach        
+        </div>
+
+        <div class='paginate'>
+            {{$shops->links()}}
         </div>
 
         <button type='button' id='bbb'>button</button>
         
-        <script>
-            window.LaravelPage=@json($page);
-            window.LaravelShops=@json($shops);
-        </script>
         <script src="{{ asset('/js/shops.js')  }}"></script>
     </body>
 </html>

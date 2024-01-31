@@ -22,9 +22,10 @@ class Shop extends Model
         'image_mobile', //スマホ用の画像
         'open', //営業時間
         'close', //休業日
+        'time', //登録された時間
     ];
 
-    public function limitget(int $limit_count=10){
+    public function limitget(int $limit_count=20){
         return $this->paginate($limit_count);
     }
 }
