@@ -12,15 +12,14 @@ class PostController extends Controller{
         ]);
     }
 
+    public function shopPage(Shop $shop){
+        return view('search/shop')->with([
+            'shop'=>$shop->first(),
+        ]);
+    }
+
     public function shops(Request $request, Shop $shops){
-        if(isset($_GET['range'])){
-            $range = $_GET['range'];
-            $date = $_GET['date'];
-        }else{
-            $date = $request->session()->get('time');
-        };
-        //$test = localStorage.getItem('time');
-        //dd($test);
+        $date = $_COOKIE['time'];
         return view('search/index')->with([
             'shops'=>$shops->where('time',$date)->paginate(6),
         ]);
@@ -53,6 +52,8 @@ class PostController extends Controller{
         $shops = json_decode($response->getBody(), true);
         $shops = $shops['results']['shop'];
         $date = strtotime('now');
+        setcookie("time",$date,time()+60*60*24);
+        setcookie("range",$data['range'],time()+60*60*24);
         foreach($shops as $index=>$shop_data){
             $shop = new Shop;
             $input_data['name'] = $shop_data['name'];
@@ -77,6 +78,7 @@ class PostController extends Controller{
             'range'=>$data['range'],
             'time'=>$date,
         ]);
+        return redirect('/shops');
     }
 
     public function demo(Request $request){

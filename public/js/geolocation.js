@@ -2,6 +2,7 @@ window.onload = function () {
     // ボタンを押した時の処理
     document.getElementById("btn").onclick = function(){
         // 位置情報を取得する
+        console.log("push button");
         window.navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
     };
     // 取得に成功した場合の処理
