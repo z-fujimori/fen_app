@@ -15,6 +15,7 @@ class Shop extends Model
         'address', //住所
         'lat', //緯度経度
         'lng',
+        'dist', //目的地までの距離
         'genre', //ジャンル
         'access', //アクセス
         'url', //お店のURL

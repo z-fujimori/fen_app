@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('address'); //住所
             $table->double('lat'); //緯度経度
             $table->double('lng');
+            $table->double('dist'); //距離
             $table->string('genre'); //ジャンル
             $table->string('access'); //アクセス
             $table->string('url')->nullable(); //お店のURL

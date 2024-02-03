@@ -12,15 +12,11 @@ class PostController extends Controller{
         ]);
     }
 
-    public function shopPage(Shop $shop){
-        return view('search/shop')->with([
-            'shop'=>$shop->first(),
-        ]);
-    }
-
     public function shops(Request $request, Shop $shops){
+        //クッキーからdbに保存した時のdate取得
         $date = $_COOKIE['time'];
         return view('search/index')->with([
+            //dateによりdbで検索
             'shops'=>$shops->where('time',$date)->paginate(6),
         ]);
     }
@@ -31,6 +27,7 @@ class PostController extends Controller{
 
         $key = config('services.HP.key');
         $url = 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/';
+        $dist_api = 'http://vldb.gsi.go.jp/sokuchi/surveycalc/surveycalc/bl2st_calc.pl?';
         //パラメータを指定
         $options = [
             'query' => [
@@ -46,21 +43,24 @@ class PostController extends Controller{
         //接続
         $client = new Client();
         $response = $client->request($method, $url, $options);
-        //dd($response);
         $shops = $response->getBody();
         $shops = json_decode($shops, true);
-        $shops = json_decode($response->getBody(), true);
         $shops = $shops['results']['shop'];
         $date = strtotime('now');
         setcookie("time",$date,time()+60*60*24);
         setcookie("range",$data['range'],time()+60*60*24);
+        $i = 0;
         foreach($shops as $index=>$shop_data){
+            // 距離を計算
+            $dist_data = cal_distanse($data['lng'],$data['lat'],$shop_data['lng'],$shop_data['lat']);
+            //dbに保存
             $shop = new Shop;
             $input_data['name'] = $shop_data['name'];
             $input_data['logo_image'] = $shop_data['logo_image'];
             $input_data['address'] = $shop_data['address'];
             $input_data['lat'] = $shop_data['lat'];
             $input_data['lng'] = $shop_data['lng'];
+            $input_data['dist'] = $dist_data;
             $input_data['genre'] = $shop_data['genre']['name'];
             $input_data['access'] = $shop_data['access'];
             $input_data['url'] = $shop_data['urls']['pc'];
@@ -70,20 +70,19 @@ class PostController extends Controller{
             $input_data['close'] = $shop_data['close'];
             $input_data['time'] = $date;
             $shop->fill($input_data)->save();
+
         };
-        //window.localStorage.setItem('time',$date);
-        //shopsブレードに取得したデータを渡す
-        //return redirect("/shops?range={$data['range']}&date={$date}");
-        return redirect('/shops')->with([
-            'range'=>$data['range'],
-            'time'=>$date,
-        ]);
         return redirect('/shops');
     }
-
-    public function demo(Request $request){
-        dd($request);
-    } 
-
 }
+
+//2点座標から距離を求める（Haversineの公式）
+function cal_distanse($lng1, $lat1, $lng2, $lat2){
+    $lng1 = deg2rad($lng1);
+    $lat1 = deg2rad($lat1);
+    $lng2 = deg2rad($lng2);
+    $lat2 = deg2rad($lat2);
+    return 6378.1337 * acos(sin($lat1) * sin($lat2) + cos($lat1) * cos($lat2) * cos($lng2-$lng1));
+};
+
 ?>

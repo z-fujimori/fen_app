@@ -1,6 +1,10 @@
 window.onload = function () {
     // ボタンを押した時の処理
     document.getElementById("btn").onclick = function(){
+        document.getElementById("btn").innerHTML = `<div class="loading"></div>`;
+        setTimeout(() => {
+          button.innerText = "送信済み"
+        }, 3000);
         // 位置情報を取得する
         console.log("push button");
         window.navigator.geolocation.getCurrentPosition(successCallback, errorCallback);

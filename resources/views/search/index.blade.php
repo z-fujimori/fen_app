@@ -18,6 +18,16 @@
     </head>
     <body class="antialiased">
         
+    <div id='wrapper'>
+        <div class='bg-gray-300'>
+            <br>
+            <div class='flex justify-center items-center gap-4'> 
+                <img src="{{ asset('/material/44056.svg') }}" width="30"></img>
+                <p class="font-semibold text-xl">グルメサーチ.web</p>
+            </div>    
+        </div>
+        <div class="bg-green-500"><br></div>
+
         <div class="center">
             <form action="/redord" method="POST" id="for" enctype="multipart/form-data">
                 <div>
@@ -43,7 +53,7 @@
 
         <div>
             <div class="mx-auto w-full max-w-xs">
-                <button id="btn" type="button" class="flex items-center p-2 rounded bg-green-600 hover:bg-blue-600 text-white border-blue-700 mx-1">
+                <button id="btn" type="button" class="flex items-center p-2 rounded bg-green-700 hover:bg-green-400 text-white border-blue-700 mx-1">
                     <div class="mx-1">
                     <svg xmlns="http://www.w3.org/2000/svg" stroke-width="1.5" viewBox="0 0 22.91 22.91" width="24" height="24" color="f7fcfe"><g id="paper-star" transform="translate(-0.545 -0.545)"><path id="Path_13" data-name="Path 13" d="M12,6.27l.6,1.26,1.35.2-.98.98.23,1.38L12,9.44l-1.2.65.23-1.38-.98-.98,1.35-.2Z" fill="none" stroke="currentColor" stroke-miterlimit="10"></path><path id="Path_14" data-name="Path 14" d="M20.59,1.5h0A1.91,1.91,0,0,1,22.5,3.41V5.32H18.68V3.41A1.91,1.91,0,0,1,20.59,1.5Z" fill="none" stroke="currentColor" stroke-miterlimit="10"></path><path id="Path_15" data-name="Path 15" d="M14.86,18.68H1.5v1.91A1.9,1.9,0,0,0,3.41,22.5H16.77a1.91,1.91,0,0,1-1.91-1.91Z" fill="none" stroke="currentColor" stroke-miterlimit="10"></path><path id="Path_16" data-name="Path 16" d="M5.32,18.68V3.41A1.9,1.9,0,0,1,7.23,1.5H20.59a1.91,1.91,0,0,0-1.91,1.91V20.59a1.9,1.9,0,0,1-1.91,1.91h0" fill="none" stroke="currentColor" stroke-miterlimit="10"></path><line id="Line_10" data-name="Line 10" x2="7.64" transform="translate(8.18 14.86)" fill="none" stroke="currentColor" stroke-miterlimit="10"></line></g></svg>                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
                     </svg>
@@ -72,15 +82,18 @@
                                 </font></font></p>
                             </div>
                         </div>
-
-                        <div class="rounded-full border flex items-center w-max py-1 px-3 bg-green-600 mx-1">
-                            <div class="text-blue-100 mr-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path>
-                                </svg>
+                        <div class='flex items-center justify-evenly'>
+                            <div class="rounded-full border flex items-center w-max py-1 px-3 bg-green-600 mx-1">
+                                <div class="text-blue-100 mr-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-white font-normal">{{$shop->genre}}</span>
                             </div>
-                            <span class="text-white font-normal">{{$shop->genre}}</span>
+                            <p class="text-gray-700 text-xl font-medium underline">{{round($shop->dist,2)*1000}} m</p>
                         </div>
+
 
                         <p class="mt-3 text-base"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
                             {{$shop->access}}
@@ -132,6 +145,12 @@
                                         <div class="flex-grow border-t-4 h-px ml-3"></div>
                                     </div>
                                     {{$shop->close}}
+                                    <div class="flex my-2 text-lg font-extrabold items-center text-gray-800">
+                                        <div class="flex-grow border-t-4 h-px mr-3"></div>
+                                        リンク
+                                        <div class="flex-grow border-t-4 h-px ml-3"></div>
+                                    </div>
+                                    <a href="{{$shop->url}}">{{$shop->url}}</a>
                                 </div>
                             </div>
                         </div>
@@ -146,10 +165,21 @@
         <div id='pagination' class="text-lg font-semibold">
             {{$shops->links()}}
         </div>
+        @else
+        <br><br><br>
+        <div class='flex justify-center items-center gap-6'>    
+            <svg class="h-12 w-12 text-green-800"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <circle cx="12" cy="12" r="10" />  <polyline points="16 12 12 8 8 12" />  <line x1="12" y1="16" x2="12" y2="8" /></svg>
+            <p class='text-xl'>距離を選んでボタンを押して検索！</p>
+        </div>
         @endif
-        
 
+        <footer id='footer' class='bg-green-700'>
+            <div class='flex justify-center items-center gap-10'>
+                <p class='text-l text-gray-200 font-medium'>API利用</p>
+                <a href="http://webservice.recruit.co.jp/"><img src="http://webservice.recruit.co.jp/banner/hotpepper-m.gif" alt="ホットペッパーグルメ Webサービス" width="88" height="35" border="0" title="ホットペッパーグルメ Webサービス"></a>            </div>
+        </footer>
 
+    </div>
 
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
