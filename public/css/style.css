@@ -1,15 +1,44 @@
 @charset "utf-8";
-
 body{
     background-color: rgb(168 162 158)
 }
-
-
-
 /* ページネーション */
 #pagination {
     text-align: center;
 }
 #pagination li{
     display: inline-block;
+}
+/* フッターを他の要素と被らずに一番下に表示させる */
+#wrapper{
+    min-height: 100vh;
+    position: relative;/*←相対位置*/
+    padding-bottom: 120px;/*←footerの高さ*/
+    box-sizing: border-box;/*←全て含めてmin-height:100vhに*/
+}
+#footer{
+    width: 100%;
+    text-align: center;
+    padding: 30px 0;
+ position: absolute;/*←絶対位置*/
+    bottom: 0; /*下に固定*/
+}
+
+
+/*ボタンを押した時のクルクル*/
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+.loading {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 0.25rem solid rgba(255, 255, 255, 0.2);
+    border-top-color: white;
+    animation: spin 1s infinite linear;
 }
