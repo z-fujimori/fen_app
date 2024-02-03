@@ -36,10 +36,10 @@ Google Chrome バージョン: 120.0.6099.216
 ## テーブル構造
 
 **テーブル図：**
-<img src=./READMEimage/er.png width="300px">
+<img src=./READMEimage/er.png width="250px">
 
 **テーブル詳細：**
-<img scr=./READMEimage/desc_shops/png width="550px">
+<img scr=./READMEimage/desc_shops.png width="550px">
 
 ## 機能概要
 
